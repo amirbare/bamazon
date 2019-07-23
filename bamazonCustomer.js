@@ -71,7 +71,7 @@ function runSearch() {
         console.info('Answers:', answers.id);
         console.info('Answers:', answers.count);
         userquantity = answers.count;
-        userid = answers.id;
+        userid = answers.id-1;
         productUpdate();
  
       });
@@ -110,10 +110,10 @@ function runSearch() {
 
         else
         {
-            console.log(userquantity);
+            // console.log(userquantity);
 
             var quantityLeft = res2[userid].stock_quantity - userquantity;
-            console.log(quantityLeft);
+            // console.log(quantityLeft);
 
             connection.query(
                 "UPDATE products SET ? WHERE ?",
@@ -127,13 +127,13 @@ function runSearch() {
                 ],
                 function(error) {
                   if (error) throw err;
-                 
+                //  console.log("last item error");
                  
                 }); 
 
             var cost = userquantity * res2[userid].price; 
               console.log("Now there are " + quantityLeft + " " + res2[userid].product_name+" left");
-              console.log("The cost of your transaction is "+cost); 
+              console.log("The cost of your transaction is $"+cost); 
 
        
 
@@ -142,7 +142,7 @@ function runSearch() {
 
         
 
-        connection.end();
+        afterConnection();
 
 
     });
