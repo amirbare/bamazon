@@ -102,7 +102,7 @@ function runSearch() {
         
         }
 
-        if(userquantity > newquantity2)
+        if(userquantity > res2[userid].stock_quantity)
         {
 
             console.log("Insuffient quantity");
