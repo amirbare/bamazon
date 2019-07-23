@@ -142,7 +142,7 @@ function runSearch() {
 
         
 
-        afterConnection();
+        connection.end();
 
 
     });
