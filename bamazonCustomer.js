@@ -50,7 +50,8 @@ function afterConnection() {
   
 }
 
-
+var userquantity;
+var userid; 
 
 function runSearch() {
     inquirer
@@ -69,11 +70,87 @@ function runSearch() {
       .then(function(answers) {
         console.info('Answers:', answers.id);
         console.info('Answers:', answers.count);
-
-        
+        userquantity = answers.count;
+        userid = answers.id;
+        productUpdate();
+ 
       });
 
-      connection.end();
+    //   connection.end();
 
   }
 
+
+
+  function productUpdate() {
+    connection.query("SELECT * FROM products", function (err2, res2) {
+
+        if (err2) throw err2;
+        // console.log(res);
+        // connection.end();
+ 
+        for( var i= 0; i< res2.length; i++)
+        {
+            var  newid2 = (res2[i].item_id);
+
+            var  newname2 = (res2[i].product_name);
+            var  newprice2 = (res2[i].price);
+            var  newquantity2 = (res2[i].stock_quantity);
+
+
+
+        
+        }
+
+        if(userquantity > newquantity2)
+        {
+
+            console.log("Insuffient quantity");
+        }
+
+        else
+        {
+            console.log(userquantity);
+
+            var quantityLeft = res2[userid].stock_quantity - userquantity;
+            console.log(quantityLeft);
+
+            connection.query(
+                "UPDATE products SET ? WHERE ?",
+                [
+                  {
+                    stock_quantity: quantityLeft
+                  },
+                  {
+                    item_id: userid
+                  }
+                ],
+                function(error) {
+                  if (error) throw err;
+                 
+                 
+                }); 
+
+            var cost = userquantity * res2[userid].price; 
+              console.log("Now there are " + quantityLeft + " " + res2[userid].product_name+" left");
+              console.log("The cost of your transaction is "+cost); 
+
+       
+
+
+        }
+
+        
+
+        connection.end();
+
+
+    });
+
+
+  
+}
+
+
+
+ 
