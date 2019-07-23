@@ -111,18 +111,17 @@ function runSearch() {
         else
         {
             // console.log(userquantity);
-
+            userid2 = userid+1;
             var quantityLeft = res2[userid].stock_quantity - userquantity;
-            // console.log(quantityLeft);
-
+            console.log(quantityLeft);
             connection.query(
                 "UPDATE products SET ? WHERE ?",
                 [
                   {
-                    stock_quantity: quantityLeft
+                  stock_quantity: quantityLeft
                   },
                   {
-                    item_id: userid
+                    item_id: userid2
                   }
                 ],
                 function(error) {
@@ -142,9 +141,8 @@ function runSearch() {
 
         
 
+
         connection.end();
-
-
     });
 
 
